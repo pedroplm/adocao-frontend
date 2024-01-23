@@ -7,14 +7,14 @@ function Home() {
     const [petList, setPetList] = useState([]);
     let history = useHistory();
 
+
+
     useEffect(()=>{
   
       const url = "http://localhost:3001/pets";
       axios.get(url).then((response) => {
         setPetList(response.data);
       });  
-    
-      
       /* 
       const fetchData = async () => {
         try {
@@ -28,24 +28,38 @@ function Home() {
   
       fetchData();*/
       
-    }, []);
+    },[]);
+
+    
 
     
       const deletePet = (id)=>{
         const url = `http://localhost:3001/pets/delete/${id}`;
-        axios.post(url).then((response) => {console.log("funcionou").this.forceUpdate()});  
-       
+        axios.post(url).then((response) => {
+          console.log("id");
+        });
+        setPetList(petList.filter((val) => { 
+          return (val.id !== id)
+        }))
+        
       }
       
       const adoptedPet = (id)=>{
         const url = `http://localhost:3001/pets/adopted/${id}`;
-        const date = new Date(Date.now);
+
         axios.post(url).then((response) => {
-          console.log("funcionou")
-           
-        })  
-       
+          console.log("funcionou");
+          setPetList(petList.map((val) => { 
+            console.log(response);
+            return (val.id === id ? {id: val.id, name: val.name, age:val.age, species: val.species, race: val.race, adoptionDate: response.data} : val) 
+          }))
+        })
+        
+        
       }
+
+      
+      
 
    
 
@@ -53,18 +67,20 @@ function Home() {
     <div>
         {petList.map((value, key)=>{
         return (
-        <div id = {key}>
-          <ul>
-            <li><h3 >{value.name}</h3></li>
-            <li>ID: {value.id}</li>
-            <li>Idade: {value.age}</li>
-            <li>Espécie: {value.species}</li>
-            <li>Raça: {value.race}</li>
-            <li>{value.adoptionDate ? ("Data de adoção: " + value.adoptionDate) : "Data de adoção: Não adotado :(" }</li>
+        <div class = "pet__container">
+          <ul class = "pet__container-info" >
+            <li class = "pet__container-titulo"><h3 >{value.name}</h3></li>
+            <li class = "pet__container-item">ID: {value.id}</li>
+            <li class = "pet__container-item">Idade: {value.age}</li>
+            <li class = "pet__container-item">Espécie: {value.species}</li>
+            <li class = "pet__container-item">Raça: {value.race}</li>
+            <li class = "pet__container-item">{value.adoptionDate ? ("Data de adoção: " + value.adoptionDate) : "Data de adoção: Não adotado" }</li>
           </ul>
-          <button onClick={()=>{history.push(`/editpet/${value.id}`)}}>Editar</button>
-          <button onClick = {()=> {deletePet(value.id)}}>Excluir</button>
-          <button onClick = {()=> {value.adoptionDate ? console.log("já foi adotado") : adoptedPet(value.id)}}>Marcar como Adotado</button>
+          <div class = "pet__container-btns">
+            <button class = { value.adoptionDate ? "pet__adotado btn" : "pet__container-adotar btn"} onClick = {()=> {value.adoptionDate ? console.log("já foi adotado") : adoptedPet(value.id)}}>Marcar como Adotado</button>
+            <button class = "btn" onClick={()=>{history.push(`/editpet/${value.id}`)}}>Editar</button>
+            <button class = "btn" onClick = {()=> {deletePet(value.id)}}>Excluir</button>
+          </div>
         </div>)
       })}
     </div>
