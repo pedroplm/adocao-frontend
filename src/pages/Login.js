@@ -16,11 +16,13 @@ function Login() {
       if (response.data.error) {
         alert(response.data.error);
       } else {
+          history.push("/home");
           sessionStorage.setItem("accessToken", response.data);
           alert("Logado com sucesso!")
-          history.push("/home");
+          
         }
     })
+    
   }
 
   return (
@@ -30,7 +32,7 @@ function Login() {
       <input className='form__container-input' type="text" onChange={e => setUsername(e.target.value)} placehodler = "Seu username"/>
       <label>Senha:</label>
       <input className='form__container-input' type="password" onChange={e => setPassword(e.target.value)} placehodler = "Sua senha"/>
-      <p className = "link" onClick = {()=>{history.push("/register")}}>Não possui uma conta ainda? Clique aqui</p>
+      <p className = "link" onClick = {()=>{history.push("/registration")}}>Não possui uma conta ainda? Clique aqui</p>
       <button onClick = {login} className='btn btn-black'>Login</button>
     </div>
   )

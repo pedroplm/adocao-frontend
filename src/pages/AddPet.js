@@ -37,7 +37,7 @@ function AddPet() {
             history.push('/');
           } else {
             console.log("Funcionou!");
-            history.push('/');
+            history.push('/home');
           }
         });  
      }

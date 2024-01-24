@@ -13,14 +13,14 @@ function Home() {
   
       const url = "http://localhost:3001/pets";
       const headerTolken = {headers: {accessToken:sessionStorage.getItem("accessToken") }}
-      const data = {}
-      axios.get(url, data, headerTolken).then((response) => {
-        if (response.data.error) {
-          alert(response.data.error);
-          history.push('/')
-        }else {
-          setPetList(response.data);
-
+     
+      axios.get(url, headerTolken).then((response) => {
+        if(!response.data.error){
+          setPetList(response.data)
+        } else {
+          console.log(response.data.error)
+          alert("Só é possivel acessar após o login")
+          history.push("/")
         }
       });  
       /* 
