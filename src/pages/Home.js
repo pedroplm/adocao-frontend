@@ -65,6 +65,7 @@ function Home() {
 
   return (
     <div>
+        <div class = "pet__logo"/>
         {petList.map((value, key)=>{
         return (
         <div class = "pet__container">
@@ -74,7 +75,7 @@ function Home() {
             <li class = "pet__container-item">Idade: {value.age}</li>
             <li class = "pet__container-item">Espécie: {value.species}</li>
             <li class = "pet__container-item">Raça: {value.race}</li>
-            <li class = "pet__container-item">{value.adoptionDate ? ("Data de adoção: " + value.adoptionDate) : "Data de adoção: Não adotado" }</li>
+            <li class = "pet__container-item">{value.adoptionDate ? ("Data de adoção: " + value.adoptionDate.split('-').reverse().join('/') ) : "Data de adoção: Não adotado" }</li>
           </ul>
           <div class = "pet__container-btns">
             <button class = { value.adoptionDate ? "pet__adotado btn" : "pet__container-adotar btn"} onClick = {()=> {value.adoptionDate ? console.log("já foi adotado") : adoptedPet(value.id)}}>Marcar como Adotado</button>

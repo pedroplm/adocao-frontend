@@ -22,7 +22,7 @@ a:hover{
     border: none;
     font-size: 14px;
     padding: 10px;
-    box-shadow: .5px .5px .5px rgb(230, 187, 131);
+    box-shadow: .5px .5px 2px rgb(110, 83, 47);
 
     text-transform: uppercase;
 
@@ -30,13 +30,13 @@ a:hover{
 }
 .btn:hover{
     background-color: rgb(243, 207, 161);
-    box-shadow: .5px .5px .5px rgb(211, 167, 111);
+    box-shadow: .5px .5px 3px rgb(110, 83, 47);
 }
 
 
 .pet__header{
     height: 80px;
-    background-color: rgb(39, 39, 39);
+    background-color: rgb(26, 25, 25);
 
     display: flex;
     justify-content: center;
@@ -44,6 +44,14 @@ a:hover{
     gap: 2rem;
     padding: 0 2rem;
     color: white ;
+    text-transform: uppercase;
+}
+.pet__logo{
+    background-image: url(./assets/adocao.png);
+    width: 350px;
+    height: 200px;
+    margin: 0 auto;
+    background-position: center;
 }
 .pet__container{
     width: 500px;
@@ -70,6 +78,7 @@ a:hover{
 }
 .pet__container-titulo{
     font-size: larger;
+    text-transform: capitalize;
 }
 .pet__container-btns{
     display: flex;
@@ -103,4 +112,10 @@ a:hover{
     border-radius: 5px;
     border:none;
 
+}
+
+@media (max-width: 550px) {
+    .pet__container{
+        width: 300px;
+    }
 }
