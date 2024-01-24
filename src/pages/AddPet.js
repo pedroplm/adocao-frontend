@@ -1,7 +1,8 @@
 import React from 'react';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import axios from "axios";
-import {  useHistory  } from 'react-router-dom'
+import * as Yup from 'yup'
+import {  useHistory  } from 'react-router-dom';
 
 //initialValues={} onSubmit={post} validationSchema={}
 function AddPet() {
@@ -17,34 +18,49 @@ function AddPet() {
 
      }
 
+     const validationSchema = Yup.object().shape({
+        name: Yup.string().max(12).required(),
+        age: Yup.number().required(),
+        species:Yup.string().max(15).required(),
+        race: Yup.string().max(15).required(),
+        adoptionDate: Yup.date().nullable()
+     });
+
+     
+
 
      const onSubmit = (data) =>{
         const url = "http://localhost:3001/pets";
-        axios.post(url, data).then((response) => {
-          console.log("Funcionou!");
-          history.push('/');
+        axios.post(url, data, {headers: {accessToken:sessionStorage.getItem("accessToken") }}).then((response) => {
+          if(response.data.error){
+            alert(response.data.error)
+            history.push('/');
+          } else {
+            console.log("Funcionou!");
+            history.push('/');
+          }
         });  
      }
 
   return (
     <div>
-        <Formik initialValues={initialValues} onSubmit={onSubmit}> 
+        <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}> 
             <Form className='form__container'>
                 <label>Nome:</label>
                 <ErrorMessage name = "name" component = "span"/>
-                <Field  className='form__container-input' name = "name" required placeholder = "Nome do Pet"/>
+                <Field  className='form__container-input' name = "name" placeholder = "Nome do Pet"/>
                 <label>Idade:</label>
-                <ErrorMessage name = "name" component = "span"/>
-                <Field  className='form__container-input' name = "age" required placeholder = "Idade do Pet"/>
+                <ErrorMessage name = "age" component = "span"/>
+                <Field  className='form__container-input' name = "age"  placeholder = "Idade do Pet"/>
                 <label>Espécie:</label>
-                <ErrorMessage name = "name" component = "span"/>
-                <Field  className='form__container-input' name = "species" required placeholder = "Ex. Cachorro, Gato..."/>
+                <ErrorMessage name = "species" component = "span"/>
+                <Field  className='form__container-input' name = "species"  placeholder = "Ex. Cachorro, Gato..."/>
                 <label>Raça:</label>
-                <ErrorMessage name = "name" component = "span"/>
-                <Field className='form__container-input' name = "race" required placeholder = "Ex. Labrador..."/>
+                <ErrorMessage name = "race" component = "span"/>
+                <Field className='form__container-input' name = "race"  placeholder = "Ex. Labrador..."/>
                 <label>Data de Adoção:</label>
                 <Field className='form__container-input' type = "date" name = "adoptionDate" placeholder = "mes/dia/ano ex: 08/15/2020"/>
-                <button className='btn' type = "submit"> Adicionar novo pet</button>
+                <button className='btn btn-black' type = "submit"> Adicionar novo pet</button>
             </Form>
         </Formik>
     </div>

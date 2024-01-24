@@ -14,6 +14,19 @@ a{
 a:hover{
     opacity: .8;
 }
+span {
+    color:grey;
+    text-transform:uppercase;
+    font-size: 12px;
+    padding: 2px;
+}
+.link{
+    font-size: 14px;
+    padding: 0.1rem 1rem 1rem;
+    text-decoration: underline;
+    cursor: pointer;
+
+}
 
 .btn{
     background-color: rgb(255, 233, 204);
@@ -32,8 +45,21 @@ a:hover{
     background-color: rgb(243, 207, 161);
     box-shadow: .5px .5px 3px rgb(110, 83, 47);
 }
+.btn-black{
+    color: white;
+    background-color: rgb(0, 0, 0);
+    box-shadow: .5px .5px 2px rgb(110, 83, 47);
+}
+.btn-black:hover{
+    background-color: rgb(131, 102, 65);
+    box-shadow: .5px .5px 5px rgb(255, 255, 255);
+}
+.subtitle{
+    margin: 2rem 0;
+    font-size: 16px;
+    text-transform: uppercase;
 
-
+}
 .pet__header{
     height: 80px;
     background-color: rgb(26, 25, 25);
@@ -44,6 +70,7 @@ a:hover{
     gap: 2rem;
     padding: 0 2rem;
     color: white ;
+    text-shadow: .2px .2px 2px white;
     text-transform: uppercase;
 }
 .pet__logo{

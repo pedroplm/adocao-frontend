@@ -12,8 +12,16 @@ function Home() {
     useEffect(()=>{
   
       const url = "http://localhost:3001/pets";
-      axios.get(url).then((response) => {
-        setPetList(response.data);
+      const headerTolken = {headers: {accessToken:sessionStorage.getItem("accessToken") }}
+      const data = {}
+      axios.get(url, data, headerTolken).then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+          history.push('/')
+        }else {
+          setPetList(response.data);
+
+        }
       });  
       /* 
       const fetchData = async () => {
@@ -34,25 +42,38 @@ function Home() {
 
     
       const deletePet = (id)=>{
-        const url = `http://localhost:3001/pets/delete/${id}`;
-        axios.post(url).then((response) => {
-          console.log("id");
-        });
-        setPetList(petList.filter((val) => { 
-          return (val.id !== id)
-        }))
+        const url = `http://localhost:3001/pets/${id}`;
+        const headerTolken = {headers: {accessToken:sessionStorage.getItem("accessToken") }}
         
+        axios.delete(url, headerTolken).then((response) => { 
+          if(response.data.error){
+            alert(response.data.error);
+            history.push('/');
+          }
+          });
+          setPetList(
+            petList.filter((val)=>{
+              return val.id !== id;
+            })
+          )
       }
       
       const adoptedPet = (id)=>{
         const url = `http://localhost:3001/pets/adopted/${id}`;
-
-        axios.post(url).then((response) => {
-          console.log("funcionou");
-          setPetList(petList.map((val) => { 
-            console.log(response);
-            return (val.id === id ? {id: val.id, name: val.name, age:val.age, species: val.species, race: val.race, adoptionDate: response.data} : val) 
-          }))
+        const headerTolken = {headers: {accessToken:sessionStorage.getItem("accessToken") }}
+        const data = {};
+        axios.post(url,data, headerTolken).then((response) => {
+          if(response.data.error){
+            alert(response.data.error);
+            history.push('/');
+          } else {
+            console.log("funcionou");
+            setPetList(petList.map((val) => { 
+              console.log(response);
+              return (val.id === id ? {id: val.id, name: val.name, age:val.age, species: val.species, race: val.race, adoptionDate: response.data} : val) 
+            }))
+          }
+          
         })
         
         
